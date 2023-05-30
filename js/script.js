@@ -16,7 +16,7 @@ const feedbackMessage = document.querySelector(".message");
 const playAgain = document.querySelector(".play-again");
 
 let word = "magnolia"
-const guessedLetters = [];
+let guessedLetters = [];
 let remainingGuesses = 8;
 
 const getWord = async function (){
@@ -118,19 +118,20 @@ const updateWordProgress = function(guessedLetters){
 const countGuessesRemaining = function (guess){
     const upperWord = word.toUpperCase();
     if (!upperWord.includes(guess)){        // if the word does not contain the letter
-        feedbackMessage.innerText = "Sorry, that guess wasn't correct";
+        feedbackMessage.innerText = "Sorry, that guess was incorrect";
         remainingGuesses -= 1;      // remaining guesses -1
     } else {
         feedbackMessage.innerText = `Great guess! ${guess} is in the word.`;        // otherwise, correct guess message display
     };
 
     if (remainingGuesses === 0){            // if player runs out of guesses, display:
-        feedbackMessage.innerHTML = `<p class="highlight">Oh no, you ran out of guesses! The word was ${upperWord}.</p>`;
-        remainingGuessesDisplay.innerHTML = `GAME OVER!`;   
+        feedbackMessage.innerHTML = `<p class="highlight">Oh no, you ran out of guesses! The word was ${upperWord}. <br> Game over!</p>`;
+        remainingGuessesDisplay.classList.add("hide");
+        startOver()
     } else if (remainingGuesses === 1){         // if player has one guess remaining, show more emphatic message
-        remainingGuessesDisplay.innerHTML = `You have <strong>ONE</strong> guess remaining!`
+        remainingSpan.innerText = `${remainingGuesses} guess`
     } else {                                    // default message of remaining guesses
-        remainingGuessesDisplay.innerHTML = `You have ${remainingGuesses} guesses remaining.`;
+        remainingSpan.innerText = `${remainingGuesses} guesses`;
     }
 }
 
@@ -138,5 +139,29 @@ const checkIfWin = function (){
     if (word.toUpperCase() === wordInProgress.innerText){       // if the guess = the word, 
         feedbackMessage.classList.add("win");                   // add the win css class & show winning message
         feedbackMessage.innerHTML = `<p class="highlight">You guessed the word! Congrats!</p>`;
+    
+        startOver();
     };
 }
+
+const startOver = function (){
+    guessButton.classList.add("hide");
+    remainingGuessesDisplay.classList.add("hide");
+    guessedLettersList.classList.add("hide");
+    playAgain.classList.remove("hide");
+};
+
+playAgain.addEventListener("click", function (){
+    feedbackMessage.classList.remove("win");
+    guessedLetters = [];
+    remainingGuesses = 8;
+    remainingSpan.innerText = `${remainingGuesses} guesses`
+    guessedLettersList.innerHTML = "";
+    feedbackMessage.innerText = "";
+    getWord();
+
+    guessButton.classList.remove("hide");
+    playAgain.classList.add("hide");
+    remainingGuessesDisplay.classList.remove("hide");
+    guessedLettersList.classList.remove("hide");
+})
