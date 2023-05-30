@@ -88,13 +88,15 @@ const makeGuess = function(guess) {
 };
 
 const letterListUpdate = function () {
-    guessedLettersList.innerHTML = "";      // initially clears the list of guessed letters
+    guessedLettersList.innerHTML = "";                // initially clears the list of guessed letter
 
-    for (const letter of guessedLetters){       // for each letter in the guessedLetters array
-    const li = document.createElement("li");    // create a list item
-    li.innerText = letter;                      // populate each list item with the letter
-    guessedLettersList.append(li);              // and add it to the guessedLettersList
-    }                                           // note: HTML element (append) vs. array (push)
+        for (const letter of guessedLetters){       // for each letter in the guessedLetters array
+            if(!word.split("").includes(letter.toLowerCase())) {
+                const li = document.createElement("li");    // create a list item for it
+                li.innerText = letter;                      // populate each list item with the letter
+                guessedLettersList.append(li);              // and add it to the guessedLettersList
+            }
+        };                                      // note: HTML element (append) vs. array (push)
 };
 
 const updateWordProgress = function(guessedLetters){
