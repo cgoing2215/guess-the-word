@@ -93,12 +93,13 @@ h1 {
 }
 
 input {
-  width: 2.25em;
+  width: 2.35em;
   text-align: center;
   font-size: 1.5em;
   margin-top: 0.5em;
   padding: 0.5em;
   border: 1px solid #000000;
+  border-radius: 1rem;
 }
 
 input:active,
@@ -110,7 +111,7 @@ input:focus {
 .guess,
 .play-again {
   padding: 1em 3em;
-  border-radius: 20px;
+  border-radius: 1rem;
   margin-top: 1em;
   color: #fff;
   background: #6681ee;
